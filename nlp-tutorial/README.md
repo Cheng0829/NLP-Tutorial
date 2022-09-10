@@ -21,7 +21,7 @@ https://github.com/graykode/nlp-tutorial 中的代码,进行了改编,添加了�
 
 - 3. [TextCNN](./3.TextCNN(文本情感二分类)) - **情感二分类**
   - Paper - [Convolutional Neural Networks for Sentence Classification(2014)](http://www.aclweb.org/anthology/D14-1181)
-  - [TextCNN.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/3.TextCNN(文本情感二分类)/TextCNN.ipynb)
+  - Colab - [TextCNN.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/3.TextCNN(文本情感二分类)/TextCNN.ipynb)
 
 ### 3. 循环神经网络
 
