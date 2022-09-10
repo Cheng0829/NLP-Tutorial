@@ -7,53 +7,34 @@ https://github.com/graykode/nlp-tutorial 中的代码,进行了改编,添加了�
 
 ## 项目实例
 
-### 1.基本嵌入模型
+### 1.基础模型
 
-- 1-1. [Word2Vec(Skip-gram)](1-2.Word2Vec) - **嵌入文字和显示图形**
+- 1.[Logistic](./1.Logistic(%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB)/) - **文本情感二分类**
+  - Colab - [Logistic.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/1.Logistic(%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB)/Logistic.ipynb)
+
+- 2. [Word2Vec(Skip-gram)](./2.Word2Vec(生成文本嵌入矩阵)) - **嵌入文字和显示图形**
   - Paper - [Distributed Representations of Words and Phrases
     and their Compositionality(2013)](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)
-  - Colab - [Word2Vec.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/1-2.Word2Vec/Word2Vec_Skipgram(Softmax).ipynb)
-- 1-2. [FastText(Application Level)](1-3.FastText) - **文本分类**
-  - Paper - [Bag of Tricks for Efficient Text Classification(2016)](https://arxiv.org/pdf/1607.01759.pdf)
-  - Colab - [FastText.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/1-3.FastText/FastText.ipynb)
+  - Colab - [Word2Vec.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/2.Word2Vec(%E7%94%9F%E6%88%90%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5)/Word2Vec-Skipgram(Softmax).ipynb))
 
 ### 2.卷积神经网络
 
-- 2-1. [TextCNN](2-1.TextCNN) - **情感二分类**
+- 3. [TextCNN](./3.TextCNN(文本情感二分类)) - **情感二分类**
   - Paper - [Convolutional Neural Networks for Sentence Classification(2014)](http://www.aclweb.org/anthology/D14-1181)
-  - [TextCNN.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/2-1.TextCNN/TextCNN.ipynb)
+  - [TextCNN.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/3.TextCNN(文本情感二分类)/TextCNN.ipynb)
 
-### 3. RNN(Recurrent Neural Network)
+### 3. 循环神经网络
 
-- 3-1. [TextRNN](3-1.TextRNN) - **预测下一个单词**
+- 4. [TextRNN](./4.TextRNN(预测下一个单词)) - **预测下一个单词**
   - Paper - [Finding Structure in Time(1990)](http://psych.colorado.edu/~kimlab/Elman1990.pdf)
-  - Colab - [TextRNN.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/3-1.TextRNN/TextRNN.ipynb)
-- 3-2. [TextLSTM](https://github.com/graykode/nlp-tutorial/tree/master/3-2.TextLSTM) - **预测单词下一个字母**
+  - Colab - [TextRNN.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/4.TextRNN(%E9%A2%84%E6%B5%8B%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D)/TextRNN.ipynb)
+
+- 5. [TextLSTM](./5.TextLSTM(预测单词下一个字母)) - **预测单词下一个字母**
   - Paper - [LONG SHORT-TERM MEMORY(1997)](https://www.bioinf.jku.at/publications/older/2604.pdf)
-  - Colab - [TextLSTM.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/3-2.TextLSTM/TextLSTM.ipynb)
-- 3-3. [Bi-LSTM](3-3.Bi-LSTM) - **在长句中预测下一个单词**
-  - Colab - [Bi_LSTM.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/3-3.Bi-LSTM/Bi_LSTM.ipynb)
+  - Colab - [TextLSTM.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/5.TextLSTM(%E9%A2%84%E6%B5%8B%E5%8D%95%E8%AF%8D%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AF%8D)/TextLSTM.ipynb)
 
-### 4.注意力机制
-
-- 4-1. [Seq2Seq](4-1.Seq2Seq) - **更换为关联词**
-  - Paper - [Learning Phrase Representations using RNN Encoder–Decoder
-    for Statistical Machine Translation(2014)](https://arxiv.org/pdf/1406.1078.pdf)
-  - Colab - [Seq2Seq.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/4-1.Seq2Seq/Seq2Seq.ipynb)
-- 4-2. [Seq2Seq with Attention](4-2.Seq2Seq(Attention)) - **机器翻译**
-  - Paper - [Neural Machine Translation by Jointly Learning to Align and Translate(2014)](https://arxiv.org/abs/1409.0473)
-  - Colab - [Seq2Seq(Attention).ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/4-2.Seq2Seq(Attention)/Seq2Seq(Attention).ipynb)
-- 4-3. [Bi-LSTM with Attention](4-3.Bi-LSTM(Attention)) - **情感二分类**
-  - Colab - [Bi_LSTM(Attention).ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/4-3.Bi-LSTM(Attention)/Bi_LSTM(Attention).ipynb)
-
-### 5.基于Transformer的模型
-
-- 5-1.  [The Transformer](5-1.Transformer) - **机器翻译**
-  - Paper - [Attention Is All You Need(2017)](https://arxiv.org/abs/1706.03762)
-  - Colab - [Transformer.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/5-1.Transformer/Transformer.ipynb), [Transformer(Greedy_decoder).ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/5-1.Transformer/Transformer(Greedy_decoder).ipynb)
-- 5-2. [BERT](5-2.BERT) - **分类下一句话和预测掩码标记**
-  - Paper - [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding(2018)](https://arxiv.org/abs/1810.04805)
-  - Colab - [BERT.ipynb](https://colab.research.google.com/github/graykode/nlp-tutorial/blob/master/5-2.BERT/BERT.ipynb)
+- 6. [Bi-LSTM](6.Bi-LSTM(在长句中预测下一个单词)) - **在长句中预测下一个单词**
+  - Colab - [Bi_LSTM.ipynb](https://colab.research.google.com/github/Cheng0829/NLP/blob/master/nlp-tutorial/6.Bi-LSTM(%E5%9C%A8%E9%95%BF%E5%8F%A5%E4%B8%AD%E9%A2%84%E6%B5%8B%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D)/Bi-LSTM.ipynb)
 
 ## Dependencies
 
@@ -64,4 +45,3 @@ https://github.com/graykode/nlp-tutorial 中的代码,进行了改编,添加了�
 
 - Cheng Junkai @github.com/Cheng0829
 - Email : Chengjunkai829@gmail.com
-  
