@@ -6,6 +6,7 @@ Date: 2022/09/13
 """
 
 from email import charset
+import re
 from tkinter import font
 import numpy as np
 import torch,time
@@ -69,7 +70,8 @@ def translate(sentences):
 
     # 把列表元素合成字符串
     translated = ' '.join(decoded) 
-    return translated, ' '.join(real_decoded) 
+    real_output = ' '.join(real_decoded) 
+    return translated, real_output
 
 class Attention(nn.Module):
     def __init__(self):
@@ -99,7 +101,9 @@ class Attention(nn.Module):
         # 返回一个未初始化的张量,内部均为随机数
         output = torch.empty([n_step, 1, n_class]).to(device) # [5,1,12]
         
-        '''获取注意力权重 : between(整个编码器上的隐状态, 整个解码器上的隐状态)'''
+        '''获取注意力权重 : between(整个编码器上的隐状态, 整个解码器上的隐状态)
+        有两次加权求和,一次是bmm,一次是dot,对应两个for循环
+        '''
         trained_attn = []
         '''解码器上的每个时间步'''
         for i in range(n_step): # 5
@@ -123,15 +127,16 @@ class Attention(nn.Module):
                 b:(z,y,c)
                 则result = torch.bmm(a,b),维度为:(z,x,c)
             """
-            '''利用attn第i时刻Encoder的隐状态的加权平均,得到上下文向量'''
+            '''利用attn第i时刻Encoder的隐状态的加权求和,得到上下文向量,即融合了注意力的模型输出'''
             # context:[1,1,n_step(=5)]x[1,n_step(=5),n_hidden(=128)]=[1,1,128]
             context = attn_weights.bmm(encoder_outputs.transpose(0, 1))
             # decoder_output_one : [batch_size(=1), num_directions(=1)*n_hidden]
             decoder_output_one = decoder_output_one.squeeze(0) # [1,1,128] -> [1,128]
             # [1, num_directions(=1)*n_hidden] # [1,128]
             context = context.squeeze(1)  
-            '''把上下文向量和解码器隐状态进行concat,得到模型输出'''
+            '''把上下文向量和解码器隐状态进行concat,得到融合了注意力的模型输出'''
             # torch.cat的dim=1代表在第二个维度上拼接 ,所以[1,128]+[1,128]->[1,256]
+            # output[i] = self.out(torch.cat((decoder_output_one, context), 1))
             output[i] = self.out(torch.cat((decoder_output_one, context), 1))
         # output: [5,1,12] -> [1,5,12] -> [5,12]
         return output.transpose(0, 1).squeeze(0), np.array(trained_attn)
@@ -221,7 +226,7 @@ if __name__ == '__main__':
     '''5.可视化注意力权重矩阵'''
     trained_attn = trained_attn.round(2)
     # print(trained_attn)
-    fig = plt.figure(figsize=(5,5))
+    fig = plt.figure(figsize=(len(input.split()), len(real_output.split()))) # (5,5)
     ax = fig.add_subplot(1, 1, 1)
     ax.matshow(trained_attn, cmap='viridis')
     ax.set_xticklabels([''] + input.split(), \

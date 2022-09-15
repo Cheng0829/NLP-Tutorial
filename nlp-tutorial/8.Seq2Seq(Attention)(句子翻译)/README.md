@@ -1,5 +1,7 @@
 # Seq2Seq(Attention)
 
+[toc]
+
 ## 1.理论
 
 ### 1.1 机器翻译
@@ -40,7 +42,50 @@ BLEU得分常用来衡量机器翻译结果的好坏
    2) "cat the"没有出现,取0;
    3) 因此,结果为(1+1+1+1)/6=2/3 (注意,虽然在翻译结果中"the cat"有两个,算出现次数的时候只算一个,但是计算二元词组总数时,需要计算两次)
 
-### 1.1.3 特殊字符
+### 1.2 注意力模型
+
+#### 1.2.1 Attention模型
+
+注意力机制(Attention Mechanism)的本质是对于给定目标,通过生成一个权重系数对输入进行加权求和，来识别输入中哪些特征对于目标是重要的,哪些特征是不重要的;
+为了实现注意力机制,我们将输入的原始数据看作<Key,Value>键值对的形式,根据给定的任务目标中的查询值Query计算Key与Query之间的相似系数,可以得到Value值对应的权重系数,即注意力权重,之后再用权重系数对Value值进行加权求和,即可得到输出.我们使用Q,K,V分别表示Query,Key和Value.
+> 注意力机制在深度学习各个领域都有很多的应用.不过需要注意的是,注意力并不是一个统一的模型,它只是一个机制,在不同的应用领域有不同的实现方法。
+
+- 注意力权重系数W的公式如下:$W=softmax⁡(QK^T)$
+- 注意力权重系数W与Value做点积操作(加权求和)得到融合了注意力的输出:
+$Attention(Q,K,V)=W⋅V=softmax⁡(QK^T)⋅V$
+
+注意力模型的详细结构如下图所示:
+![ ](img/Seq2Seq(Attention)-Model-Essence.png)
+> 在本实验中Query是指decoder_output, Key和Value都是指encoder_outputs, 注意力权重W是指attn_weights
+
+1) 在对decoder时间步的遍历循环中,用dot点积得到每个时间步decoder_output_one和encoder_outputs之间的注意力权重,最后生成注意力权重列表trained_attn
+2) 把每一个decoder时间步生成的注意力权重attn_weights和encoder_outpus用bmm()函数进行加权求和,得到融合了注意力的输出context
+3) 当然,在Seq2Seq任务中,求出的context还需要和decoder_output进行combine和fc
+
+---
+
+传统机器翻译和加了注意力机制之后的机器翻译的BLEU得分对比:
+![ ](img/Seq2Seq(Attention)-BLEU.png)
+
+#### 1.2.2 Seq2Seq(Attention)模型结构
+
+在添加了注意力模型前后,编码器结构并没有什么变化;但是,在解码器中,传统的解码器结构发生了很大改变.
+
+##### 1.2.2.1 Encoder
+
+![ ](img/Seq2Seq(Attention)-Encoder.png)
+
+---
+
+##### 1.2.2.2 Decoder
+
+###### 1.2.2.2.1 原始解码器
+
+![ ](img/Seq2Seq(Attention)-Decoder-Classic.png)
+
+###### 1.2.2.2.2 带有注意力机制的解码器
+
+![ ](img/Seq2Seq(Attention)-Decoder-Attention.png)
 
 ### 1.3 特殊字符
 
@@ -51,45 +96,6 @@ BLEU得分常用来衡量机器翻译结果的好坏
 - **结束符:** 添加结束符是为了在预测单词时告诉模型终止输出.在训练集数据很多时,句子显然不可能都是等长的,翻译结果也应该不等长,为了控制翻译结果的长度,我们会在训练数据的target末尾加入结束符,这样翻译短句时,模型看见了结束符也就不会继续翻译了.(当然也可以不设置终止符,而设置一个最大输出长度,超过长度自动结束翻译输出)
   
    > 开始符和结束符在训练时都被当做普通的一个单词或者字符进行训练,而他们的位置是固定的,开始符$S$只出现在解码器的输入,结束符$E$只出现在解码器的输出.当预测时,我们只在编码器Encoder中有输入,而解码器Decoder的输入就是'SPPP···'
-
-## 1.2 注意力模型
-
-### 1.2.1 Attention模型
-
-> a:激活状态(隐藏层hidden) α:注意力权重  x:输入向量 y:最终输出向量 s:输出向量 e:一个s和a得到的中间向量
-
-![ ](img/Seq2Seq(Attention)-Attention-Structure.png)
-
----
-
-![ ](img/Seq2Seq(Attention)-Attention-Computing.png)
-
----
-
-传统机器翻译和加了注意力机制之后的机器翻译的BLEU得分对比:
-![ ](img/Seq2Seq(Attention)-BLEU.png)
-
-### 1.2.2 Seq2Seq(Attention)模型结构
-
-在添加了注意力模型前后,编码器结构并没有什么变化;但是,在解码器中,传统的解码器结构发生了很大改变.
-
-#### 1.2.2.1 Encoder
-
-![ ](img/Seq2Seq(Attention)-Encoder.png)
-
----
-
-#### 1.2.2.2 Decoder
-
-##### 1.2.2.2.1 原始解码器
-
-![ ](img/Seq2Seq(Attention)-Decoder-Classic.png)
-
----
-
-##### 1.2.2.2.2 带有注意力机制的解码器
-
-![ ](img/Seq2Seq(Attention)-Decoder-Attention.png)
 
 ## 2.实验
 
